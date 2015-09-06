@@ -1,5 +1,5 @@
 FROM java:8-jdk
-
+USER root
 RUN apt-get update && apt-get install -y wget git curl zip git-core build-essential libfile-pushd-perl sudo && rm -rf /var/lib/apt/lists/*
 
 ENV JENKINS_HOME /var/jenkins_home
@@ -13,6 +13,10 @@ RUN useradd -d "$JENKINS_HOME" -u 1000 -m -s /bin/bash jenkins
 # Jenkins home directoy is a volume, so configuration and build history 
 # can be persisted and survive image upgrades
 VOLUME /var/jenkins_home
+
+## setup sudoers
+RUN echo "jenkins    ALL=(ALL)       ALL" >> /etc/sudoers.d/jenkins
+
 
 # `/usr/share/jenkins/ref/` contains all reference configuration we want 
 # to set on a fresh new installation. Use it to bundle additional plugins 
