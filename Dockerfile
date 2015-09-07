@@ -16,7 +16,7 @@ VOLUME /var/jenkins_home
 
 ## setup sudoers
 #RUN echo "jenkins    ALL=(ALL)       ALL" >> /etc/sudoers.d/jenkins
-RUN echo "%sudo ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+RUN echo "jenkins ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 
 # `/usr/share/jenkins/ref/` contains all reference configuration we want 
@@ -51,7 +51,7 @@ EXPOSE 50000
 
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 
-USER jenkins
+#USER jenkins
 
 COPY jenkins.sh /usr/local/bin/jenkins.sh
 ENTRYPOINT ["/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
